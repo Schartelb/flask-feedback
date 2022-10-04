@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title%} Edit {{user.username}} Feedback {%endblock%}
+
+{% block content%}
+
+<h2 class="display-2">Edit {{user.username}}'s Feedback</h2>
+<form action='/feedback/{{feedback.id}}/update' method="POST">
+    {{ form.hidden_tag() }}
+
+    {% for field in form
+    if field.widget.input_type != 'hidden' %}
+    <p>
+        {{ field.label }}
+        {{ field }}
+
+        {% for error in field.errors %}
+        {{ error }}
+        {% endfor %}
+    </p>
+    {% endfor %}
+    <button class="btn btn-success">Update</button>
+    <button formaction="'/users/{{user.username}}'" class="btn btn-warning">Cancel</button>
+</form>
+{%endblock%}

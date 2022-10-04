@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+
+{% block title%}{{user.username}}{%endblock%}
+
+{% block content%}
+<h1 class="display-2">Welcome, {{user.username}}!</h1>
+
+<div>
+    {% for opinion in feedback%}
+    <p style="display:inline">{{opinion.title}} - {{opinion.content}}
+        {%if session['username']==opinion.username%}
+    <form style="display:inline">
+        <button class="btn btn-warning" formaction='/feedback/{{opinion.id}}/update' formmethod="GET">Edit</button>
+        <button class="btn btn-danger" formaction='/feedback/{{opinion.id}}/delete' formmethod="POST">Delete</button>
+    </form>
+    {%endif%}
+    </p>
+
+    {% endfor%}
+</div>
+<form>
+    <button formmethod="GET" formaction='/users/{{user.username}}/feedback/add' class="btn btn-success">Add
+        Feedback</button>
+    <button formmethod="GET" formaction="/logout" class="btn btn-warning">Logout</button>
+    <button formmethod="POST" formaction="/users/{{user.username}}/delete" class="btn btn-danger">Delete</button>
+</form>
+{%endblock%}
